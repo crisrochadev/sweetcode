@@ -1,7 +1,7 @@
 import Posts from "@lib/controllers/Posts";
 
 export default async function handlePosts(req,res){
-    const response = {
+    let response = {
         status:401,
         result:{
             message:'Verifique os dados da requisição'
