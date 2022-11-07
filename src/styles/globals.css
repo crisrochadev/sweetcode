@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.excerpt-mode{
+    width:100%;
+}
+.height-menu-admin {
+    height:40px;
+}
+@media (min-width:768px){
+    .excerpt-mode{
+        width:calc(100% - 280px);
+    }
+    .height-menu-admin {
+        height:calc(100% - 40px);
+    }
+    
+}
