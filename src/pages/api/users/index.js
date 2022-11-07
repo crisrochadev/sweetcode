@@ -1,22 +1,30 @@
 import Users from "@lib/controllers/Users"
 
-export default async function(req,res){
+export default async function (req, res) {
     let response = {
-        status:401,
-        result:{
-            message:"Verifique os dados da requisição"
+        status: 401,
+        result: {
+            message: "Verifique os dados da requisição"
         }
     }
-    const {method} = req
+    const { method } = req
     const data = req.body
-    if(method === 'POST'){
+    if (method === 'POST') {
         response = await Users.getUsersByLogin(data)
     }
-    if(method === 'GET'){
+    if (method === 'GET') {
         const token = req.headers.authorization
-        if(token) {
-            
-        response = await Users.getUserByToken(token)
+        if (token) {
+
+            response = await Users.getUserByToken(token)
+        } else {
+            response = {
+                status: 201,
+                result: {
+                    message: "Voce nao esta autorizado!",
+                    user: null
+                }
+            }
         }
     }
     res.status(response.status).json(response.result)

@@ -17,7 +17,7 @@ export default {
                         status: 200,
                         result: {
                             id: user.id,
-                            token:user.token,
+                            token:user.accessToken,
                             photoURL:user.photoURL,
                             message: 'Usuario autenticado'
                         }
