@@ -26,7 +26,7 @@ export default function AuthProvider({ children }) {
         }
     }
     useEffect(() => {
-        if (!router.pathname.startsWith('/entrar')) {
+        if (router.pathname.startsWith('/admin') ) {
 
             const cookies = parseCookies();
             getUserByToken(cookies['AUTH_TOKEN'])
