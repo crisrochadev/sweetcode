@@ -25,7 +25,7 @@ const ThemeSwitch = ({ children }) => {
   if (!mounted) {
     return null
   }
-  console.log(currentTheme)
+  // console.log(currentTheme)
 
   return (
     <div className='h-screen relative w-screen overflow-hidden'>
@@ -71,7 +71,7 @@ const ThemeSwitch = ({ children }) => {
                 className={`far fa-${currentTheme.icon} mr-2`}></i>
               {currentTheme.label}
             </button>
-            {openOptions && <div className='w-full bg-gray-50 dark:bg-gray-500 p-1 absolute top-full shadow-md'>
+            {openOptions && <div className='w-full bg-gray-50 dark:bg-gray-500 p-1 absolute z-50 top-full shadow-md'>
               {themes.map(theme => (
                 <button
                   key={theme.id} onClick={() => {

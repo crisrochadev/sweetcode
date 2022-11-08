@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export default function AsideMenu({ openMenu, setOpenMenu,user }) {
     const menu = [
-        { id: 1, label: 'Painel', icon: 'chart-line', url: `/admin/${user.id}` },
+        { id: 1, label: 'Painel', icon: 'chart-line', url: `/admin/${user.id}/dashboard` },
         { id: 2, label: 'Postagens', icon: 'newspaper', url: `/admin/${user.id}/postagens` },
         { id: 3, label: 'Categorias', icon: 'folders', url: `/admin/${user.id}/categorias` },
         { id: 4, label: 'Marcadores', icon: 'tags', url: `/admin/${user.id}/marcadores` },

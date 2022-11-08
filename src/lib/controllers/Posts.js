@@ -53,5 +53,52 @@ export default {
                 category:currentCategory
             }
         }
+    },
+    async createPost(post) {
+        const { nextRowId, sheet } = await connectSpreadSheet('posts')
+        const newPost = {
+            id: nextRowId,
+            title: post.title,
+            content: post.content,
+            excerpt: post.excerpt,
+            thumbnail: post.thumbnail,
+            tags: JSON.stringify(post.tags),
+            category: post.category,
+            is_public: false,
+            date: new Date(Date.now()),
+            slug: post.title.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-'),
+            author: post.author
+        }
+        const res = await sheet.addRow(newPost)
+        return {
+            status: 200,
+            result: {
+                id: res.id
+            }
+        }
+    },
+    async publishPost(data,id){
+            const {rows} = await connectSpreadSheet('posts')
+            const row = rows.find(row => row.id === id)
+            const index = rows.indexOf(row)
+            let newRow = rows[index]
+            for (let key in newRow) {
+                for (let keyData in data) {
+                    if (key === keyData) {
+                        newRow[key] = data[keyData]
+                    }
+
+                }
+
+            }
+            console.log(id)
+            console.log(newRow)
+            // console.log(rows)
+            rows[index] = newRow;
+            const result = await rows[index].save();
+            return  {
+                status: 200,
+                result: result
+            }
     }
 }

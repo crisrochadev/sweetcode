@@ -72,7 +72,7 @@ export async function getServerSideProps(ctx) {
   const posts = data.result.posts
   return {
     props: {
-      posts: posts
+      posts: posts.reverse()
     }
   }
 }

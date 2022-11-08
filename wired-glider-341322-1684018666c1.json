@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "wired-glider-341322",
+  "private_key_id": "1684018666c127d76912fa68c7e30c06f13f520a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC/lParfyT2T3lL\no+XL+U3nJUZvGi5GU7sUdvLsVpg9f44ob3bGQ5AGG5MMbG5ITGVgrjjDoujo9FvL\nk0RaIN9wPnMxh0bgGe80xUrHffEoooHoa7c32/gx0tk+hTDvEIRuxEUlKq8TBVxL\nLGNqAj4OReHXrwgGF1IqB7zMxIFmbx7K+Nkfvm+tqH9VVx80XB+/nuw92TAu9hVA\nkvlwfel/5hOjyv5IduBmFOo88fpbdiJvEfrH5KAzDvmKdasSIUca+fsU1wNOJf2i\nBh80qoAl7iCbFvaTNkBoxCvOpEAXyyAJLQza92ah+noDyA6ZmBpw5h48wly01Eyp\nRCzY7kcVAgMBAAECgf8gjzYm1tdgemGFXF0kXiyWTIjmjPMF6lOjb6k1Of7DPtiT\n+WzlIHKv67NKsB3Q2iXiHioba06XQ7AGlPoTl3t/csfzKAfqPja3Lt7f3cdcQLRY\n7v68naxwpIceh6wfherG7IkrizGX2IDOVid9z/w6Z5SwbIOddhjuVzFYmqf6Ok5p\nu6yDpstGCr6m/mbJ/4cWfvWts++JNj3Y0X/y83t/0gpFGAkQZuj/pqMUveOJUakb\n0d9zJwhO+PyGatl5d8OW9kkD1O1NxWIdmVYe58j/jge74eh+4pnz0bD4ZlC9rS22\nybrLCBOH0rKbK4Wvc6PmNYbMfnBJx6rXcIlsktECgYEA7LlA1MGE2HQLE1E6xcRX\n+mESvDtDotpVFnZ3M0nWh3mayGGeMBAZ/PWEc2zD3Gq34v+dg112iOtOor1/6ONn\nkz22OmBOz8itdD9Mnapx70BfYy3Fp8M91ZwxKCnnaQsgP7wFIthlv8zeikWJlVf/\nZqsFiD/oSUI2kJMBut6LQA0CgYEAzy6vJgpnPz3im+nw2iWjdXINmfY5HaE8par8\n6WHCUqI1D8UPo/NUqNg9v0qL4CCzvD69g/QA8XCgzA9sABK4XptN75uFydf7i1SH\nij7Njjd97bH0UhW4LWwP3Y7wv2m712eel9xDU5BZDh50nrlRC8vHz3TiXEx3nxbK\naQ0u2SkCgYEAjVq5ydGc4Bu7GVfh/oIV/t7Ebz38T1yMfpNS7n9i6RbGRG12JkEX\nI6P/6WTDN/VJxPTaO70tsOjB1g/ON2TDTnsFO6qSpSSx3r6Fo4hJ7JHF49VLN7gw\nTkOsXs1W77TDFwvRDVOmvnc5U9veIh2f1tC8xvVSYZx2NLJz0ABfqmkCgYANSXYs\nH2Ctup9M1nz+0IkiIBVlOVhCYTPNgCDGKuHWgNacU0wEfLeCOJQFL5e24QIF4ZQv\n4TcqRMnbLGYFvy2Zy6X85uF2p2ZXci1bHVn7c+2cj9wWY5QzPYnq8J7Z98L3NosC\nPDsJIenEMQnToBjlg8Ultd5KgxDs3/5NLG5DuQKBgQCXvprmkT237apMPr1+m5ru\n3LAiyTcteXErWi2ZP+NqskddtXHbl3rT5FkpQZe9vEQ/qMOxmz1x/y23cQOU0tnk\ntbyefboIa8geGPz3GVyjdIoIAz7OcxaNC5UUA+XM32HkTpdU1qDl3UdGlTy5XXAQ\nQm/WQAhqBuawVjPylueQEw==\n-----END PRIVATE KEY-----\n",
+  "client_email": "scanalyitcs@wired-glider-341322.iam.gserviceaccount.com",
+  "client_id": "108125790626246105620",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/scanalyitcs%40wired-glider-341322.iam.gserviceaccount.com"
+}

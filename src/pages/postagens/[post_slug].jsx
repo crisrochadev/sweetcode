@@ -5,7 +5,8 @@ import Moment from 'react-moment';
 import Link from "next/link";
 
 export default function Post({ post }) {
-    console.log(post)
+
+    // console.log(post)
     return (
         <div className="w-11/12 mx-auto">
             {post === null ? <PostSkeleton /> : <section className="pb-6">
