@@ -1,5 +1,5 @@
 import PostSkeleton from "@components/basic/PostSkeleton"
-import Posts from "@lib/controllers/Posts";
+import Pages from "@lib/controllers/Pages";
 import { useRouter } from "next/router";
 import { useEffect } from "react"
 
@@ -40,8 +40,10 @@ export async function getStaticPaths() {
 
   // Call an external API endpoint to get posts
   
-  const res = await Posts.getSlugs();
+  const res = await Pages.getSlugsPages();
+  // console.log(res)
   const slugs = res.result.slugs
+  // console.log(slugs)
 
 //   console.log(slugs)
   // Get the paths we want to prerender based on posts
@@ -58,7 +60,8 @@ export async function getStaticPaths() {
 // `getStaticPaths` requires using `getStaticProps`
 export async function getStaticProps({params}) {
     // console.log(params.page_slug)
-    const res = await Posts.getPostBySlug(params.page_slug)
+    const res = await Pages.getPageBySlug(params.page_slug)
+    console.log(res)
     const page = res.result.page ? res.result.page : null
   
     return {
