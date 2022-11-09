@@ -105,12 +105,3 @@ export async function getStaticProps(context) {
     props: { posts: posts},
   }
 }
-// export async function getServerSideProps(ctx) {
-//   const data = await Posts.getAllPosts();
-//   const posts = data.result.posts
-//   return {
-//     props: {
-//       posts: posts.reverse()
-//     }
-//   }
-// }

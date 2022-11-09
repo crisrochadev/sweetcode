@@ -93,7 +93,7 @@ export async function publishPost(data,id){
         }
 
     }
-    // console.log(rows)
+
     rows[index] = newRow;
     const result = await rows[index].save();
     return  result
