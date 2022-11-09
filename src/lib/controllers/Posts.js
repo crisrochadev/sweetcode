@@ -1,8 +1,11 @@
 import connectSpreadSheet from "@lib/models/connectSpreadSheet"
+import { createPost, getAllPosts,getPostBySlug, getPostsByCategory, getSlugs, publishPost } from "@lib/models/posts.js";
+import { prisma } from "@lib/service/database/prisma";
+import { PrismaClient } from "@prisma/client";
 
 export default {
     async getAllPosts(){
-        const { rowsPosts } = await connectSpreadSheet('posts')
+        const rowsPosts = await getAllPosts();
         const { rowsTags } = await connectSpreadSheet('tags')
         const { rowsCategories } = await connectSpreadSheet('categories')
         const posts = rowsPosts.map(row => {
@@ -29,9 +32,10 @@ export default {
             }
         }
     },
+
+
     async getPostBySlug(slug){
-        const { rowsPosts } = await connectSpreadSheet('posts');
-        const post = rowsPosts.find(post => post.slug === slug)
+        const post = await getPostBySlug(slug);
         return{
             status:200,
             result:{
@@ -40,11 +44,7 @@ export default {
         }
     },
     async getPostsByCategory(category){
-        const { rowsPosts } = await connectSpreadSheet('posts')
-        const { rowsCategories } = await connectSpreadSheet('categories')
-        const categories = rowsCategories.find(ct => ct.slug === category)
-        const posts = rowsPosts.filter(post => post.category === categories.id)
-        const currentCategory = categories
+        const { posts, currentCategory } = await getPostsByCategory(category)
 
         return{
             status:200,
@@ -54,48 +54,26 @@ export default {
             }
         }
     },
-    async createPost(post) {
-        const { nextRowId, sheet } = await connectSpreadSheet('posts')
-        const newPost = {
-            id: nextRowId,
-            title: post.title,
-            content: post.content,
-            excerpt: post.excerpt,
-            thumbnail: post.thumbnail,
-            tags: JSON.stringify(post.tags),
-            category: post.category,
-            is_public: false,
-            date: new Date(Date.now()),
-            slug: post.title.normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/ /g, '-'),
-            author: post.author
+    async getSlugs(){
+        const slugs = await getSlugs();
+        return{
+            status:200,
+            result:{
+                slugs:slugs,
+            }
         }
-        const res = await sheet.addRow(newPost)
+    },
+    async createPost(post) {
+       const id = await createPost(post)
         return {
             status: 200,
             result: {
-                id: res.id
+                id: id
             }
         }
     },
     async publishPost(data,id){
-            const {rows} = await connectSpreadSheet('posts')
-            const row = rows.find(row => row.id === id)
-            const index = rows.indexOf(row)
-            let newRow = rows[index]
-            for (let key in newRow) {
-                for (let keyData in data) {
-                    if (key === keyData) {
-                        newRow[key] = data[keyData]
-                    }
-
-                }
-
-            }
-            console.log(id)
-            console.log(newRow)
-            // console.log(rows)
-            rows[index] = newRow;
-            const result = await rows[index].save();
+            const result = await publishPost(data,id)
             return  {
                 status: 200,
                 result: result

@@ -11,5 +11,16 @@ export default {
                 page: page
             }
         }
+    },
+    async getSlugsPages(){
+        const { rowsPages } = await connectSpreadSheet('pages')
+        const slugs = rowsPages.map(row => row.slug)
+        return {
+            status: 200,
+            result: {
+                slugs: slugs
+            }
+        }
     }
+
 }

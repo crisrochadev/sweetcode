@@ -47,9 +47,9 @@ export default function NewPostComponent() {
             thumbnail: image,
             tags: selectedItems.map(select => select.id),
             category: selected.id ? selected.id : '',
-            author: user.fullName
+            author: user.fullName !== undefined ?  user.fullName  : ''
         }
-        // console.log(selected)
+        
         setData(newData)
         setOpenModalSave(true)
     }

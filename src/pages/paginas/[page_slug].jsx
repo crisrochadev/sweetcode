@@ -1,10 +1,15 @@
 import PostSkeleton from "@components/basic/PostSkeleton"
-import Pages from "@lib/controllers/Pages"
+import { useRouter } from "next/router";
+import { useEffect } from "react"
 
 export default function Contact({page}){
+    const router = useRouter();
+    useEffect(() => {
+        if(page === null) router.push('/pesquisar?search='+router.query.page_slug)
+    },[])
     return(
         <div>
-            {page == undefined 
+            {page == null 
                 ? <PostSkeleton/>
                 : (
                     <section className="w-11/12 mx-auto">
@@ -21,12 +26,43 @@ export default function Contact({page}){
     )
 }
 
-export async function getServerSideProps(ctx){
-    const {page_slug} = ctx.params
-    const data = await Pages.getPageBySlug(page_slug)
-    return{
-        props:{
-            page:data.result.page
-        }
+export async function getStaticPaths() {
+  // When this is true (in preview environments) don't
+  // prerender any static pages
+  // (faster builds, but slower initial page load)
+  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+    return {
+      paths: [],
+      fallback: 'blocking',
     }
+  }
+
+  // Call an external API endpoint to get posts
+  
+  const res = await fetch('http://localhost:3000/api/pages?arg=slug').then(res => res.json())
+  // const slugs = await res.json()
+  const slugs = res.slugs
+//   console.log(slugs)
+  // Get the paths we want to prerender based on posts
+  // In production environments, prerender all pages
+  // (slower builds, but faster initial page load)
+  const paths = slugs.map((slug) => ({
+    params: { page_slug: slug },
+  }))
+
+// { fallback: false } means other routes should 404
+  return { paths, fallback: 'blocking' }
 }
+
+// `getStaticPaths` requires using `getStaticProps`
+export async function getStaticProps({params}) {
+    // console.log(params.page_slug)
+    const res = await fetch('http://localhost:3000/api/pages/'+params.page_slug,{method:'GET'}).then(res => res.json())
+    const page = res.page ? res.page : null
+  
+    return {
+      // Passed to the page component as props
+      props: { page: page },
+      revalidate:10
+    }
+  }

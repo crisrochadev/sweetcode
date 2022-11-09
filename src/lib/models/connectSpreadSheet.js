@@ -15,6 +15,7 @@ export default async function connectSpreadSheet(schema){
     
     const sheet = doc.sheetsByTitle[schema];
     const rows = await sheet.getRows(); 
+    
     let rowsUsers, rowsPosts,rowsTags,rowsCategories,rowsPages;
     if(schema === 'posts') rowsPosts = rows.map((post) => (({
       id:post.id,

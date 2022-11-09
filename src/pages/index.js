@@ -1,4 +1,4 @@
-import Posts from '@lib/controllers/Posts'
+import PostSkeleton from '@components/basic/PostSkeleton';
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect } from 'react';
@@ -7,10 +7,11 @@ import Moment from 'react-moment';
 export default function Home({ posts }) {
   return (
     <div className='w-[90%] mx-auto'>
-    <section
+      {posts === null ? <PostSkeleton/> :
+      (<section
         className='md:flex flex-wrap gap-4 my-4 block'
       >
-        
+
         {posts.map(post => (
           <article
             className='w-[100%] shadow-md md:h-[300px] md:flex justify-between items-center p-1'
@@ -25,11 +26,11 @@ export default function Home({ posts }) {
                 style={{ objectFit: 'cover' }}
               />
             </div>
-            <div  className="p-2 flex flex-col justify-between items-start h-full excerpt-mode">
+            <div className="p-2 flex flex-col justify-between items-start h-full excerpt-mode">
               <header className='w-full uppercase'>
                 <div className='flex'>
-                <p className='text-[10px] h-4 flex items-center px-2'><i className="far fa-calendar mr-2 text-pink-500"></i><Moment date={post.date} format="DD/MM/YY HH:mm" /></p>
-                <p className='text-[10px] h-4 flex items-center px-2'><i className="far fa-user mr-2 text-pink-500"></i>{post.author}</p>
+                  <p className='text-[10px] h-4 flex items-center px-2'><i className="far fa-calendar mr-2 text-pink-500"></i><Moment date={post.date} format="DD/MM/YY HH:mm" /></p>
+                  <p className='text-[10px] h-4 flex items-center px-2'><i className="far fa-user mr-2 text-pink-500"></i>{post.author}</p>
                 </div>
                 <h1 className='text-xl font-bold mt-2'>{post.title}</h1>
               </header>
@@ -54,7 +55,7 @@ export default function Home({ posts }) {
                   <div className='flex text-[10px] h-full  items-center pr-2'>
                     <span className=' text-[10px] bg-pink-500 flex justify-center items-center w-6 h-6 mr-2'><i className='far fa-folders'></i></span>
                     <Link href={`/categorias/${post.category.slug}`}>
-                    <p className='text-[10px] h-6 flex items-center px-2' style={{ color: post.category.color, background: post.category.bg }}><i className={`far fa-${post.category.icon} mr-1`}></i><span>{post.category.name}</span></p>
+                      <p className='text-[10px] h-6 flex items-center px-2' style={{ color: post.category.color, background: post.category.bg }}><i className={`far fa-${post.category.icon} mr-1`}></i><span>{post.category.name}</span></p>
                     </Link>
                   </div>
                 )}
@@ -62,17 +63,54 @@ export default function Home({ posts }) {
             </div>
           </article>
         ))}
-      </section>
+      </section>)}
     </div>
   )
 }
+// export async function getStaticPaths() {
+//   // When this is true (in preview environments) don't
+//   // prerender any static pages
+//   // (faster builds, but slower initial page load)
+//   if (process.env.SKIP_BUILD_STATIC_GENERATION) {
+//     return {
+//       paths: [],
+//       fallback: 'blocking',
+//     }
+//   }
 
-export async function getServerSideProps(ctx) {
-  const data = await Posts.getAllPosts();
-  const posts = data.result.posts
+//   // Call an external API endpoint to get posts
+  
+
+//   // const slugs = await res.json()
+//   const slugs = ['hahaha','tdskdjdhfkdsjf']
+//   // Get the paths we want to prerender based on posts
+//   // In production environments, prerender all pages
+//   // (slower builds, but faster initial page load)
+//   const paths = slugs.map((slug) => ({
+//     params: { id: slug },
+//   }))
+
+// // { fallback: false } means other routes should 404
+//   return { paths, fallback: false }
+// }
+
+// `getStaticPaths` requires using `getStaticProps`
+export async function getStaticProps(context) {
+  const res = await fetch('http://localhost:3000/api/posts').then(res => res.json())
+  // console.log(res)
+  const posts = res.posts ? res.posts.reverse()  : null;
+
   return {
-    props: {
-      posts: posts.reverse()
-    }
+    // Passed to the page component as props
+    props: { posts: posts},
   }
 }
+// export async function getServerSideProps(ctx) {
+//   const data = await Posts.getAllPosts();
+//   const posts = data.result.posts
+//   return {
+//     props: {
+//       posts: posts.reverse()
+//     }
+//   }
+// }

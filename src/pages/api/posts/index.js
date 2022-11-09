@@ -10,13 +10,30 @@ export default async function handlePosts(req, res) {
     const { method } = req
     switch (method) {
         case 'GET':
-            try {
-                response = Posts.getAllPosts();
-            } catch (err) {
-                response = {
-                    status: 500,
-                    result: {
-                        message: err
+            const arg = req.query.arg
+            if (arg !== undefined) {
+                if (arg === 'slug') {
+                    try {
+                        response = await Posts.getSlugs();
+                    } catch (err) {
+                        response = {
+                            status: 500,
+                            result: {
+                                message: err
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                try {
+                    response = await Posts.getAllPosts();
+                } catch (err) {
+                    response = {
+                        status: 500,
+                        result: {
+                            message: 'ola mundo'
+                        }
                     }
                 }
             }
@@ -26,7 +43,7 @@ export default async function handlePosts(req, res) {
             break;
         case 'PUT':
             console.log(req.query)
-            response = await Posts.publishPost(req.body,req.query.post_id)
+            response = await Posts.publishPost(req.body, req.query.post_id)
 
             break;
         default:
