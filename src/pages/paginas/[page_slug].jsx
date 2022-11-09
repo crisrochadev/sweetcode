@@ -57,7 +57,7 @@ export async function getStaticPaths() {
 // `getStaticPaths` requires using `getStaticProps`
 export async function getStaticProps({params}) {
     // console.log(params.page_slug)
-    const res = await fetch('http://localhost:3000/api/pages/'+params.page_slug,{method:'GET'}).then(res => res.json())
+    const res = await fetch('https://sweetcode.com.br/api/pages/'+params.page_slug,{method:'GET'}).then(res => res.json())
     const page = res.page ? res.page : null
   
     return {

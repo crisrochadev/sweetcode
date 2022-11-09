@@ -96,7 +96,7 @@ export default function Home({ posts }) {
 
 // `getStaticPaths` requires using `getStaticProps`
 export async function getStaticProps(context) {
-  const res = await fetch('http://localhost:3000/api/posts').then(res => res.json())
+  const res = await fetch('https://sweetcode.com.br/api/posts').then(res => res.json())
   // console.log(res)
   const posts = res.posts ? res.posts.reverse()  : null;
 
