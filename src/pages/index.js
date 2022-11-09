@@ -1,4 +1,5 @@
 import PostSkeleton from '@components/basic/PostSkeleton';
+import Posts from '@lib/controllers/Posts';
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect } from 'react';
@@ -96,9 +97,9 @@ export default function Home({ posts }) {
 
 // `getStaticPaths` requires using `getStaticProps`
 export async function getStaticProps(context) {
-  const res = await fetch('https://sweetcode.com.br/api/posts').then(res => res.json())
+  const res = await Posts.getAllPosts();
   // console.log(res)
-  const posts = res.posts ? res.posts.reverse()  : null;
+  const posts = res.result.posts ? res.result.posts.reverse()  : null;
 
   return {
     // Passed to the page component as props

@@ -1,4 +1,5 @@
 import PostSkeleton from "@components/basic/PostSkeleton"
+import Posts from "@lib/controllers/Posts";
 import { useRouter } from "next/router";
 import { useEffect } from "react"
 
@@ -39,9 +40,9 @@ export async function getStaticPaths() {
 
   // Call an external API endpoint to get posts
   
-  const res = await fetch('https://sweetcode.com.br/api/pages?arg=slug').then(res => res.json())
-  // const slugs = await res.json()
-  const slugs = res.slugs
+  const res = await Posts.getSlugs();
+  const slugs = res.result.slugs
+
 //   console.log(slugs)
   // Get the paths we want to prerender based on posts
   // In production environments, prerender all pages
@@ -57,8 +58,8 @@ export async function getStaticPaths() {
 // `getStaticPaths` requires using `getStaticProps`
 export async function getStaticProps({params}) {
     // console.log(params.page_slug)
-    const res = await fetch('https://sweetcode.com.br/api/pages/'+params.page_slug,{method:'GET'}).then(res => res.json())
-    const page = res.page ? res.page : null
+    const res = await Posts.getPostBySlug(params.page_slug)
+    const page = res.result.page ? res.result.page : null
   
     return {
       // Passed to the page component as props
