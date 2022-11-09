@@ -1,7 +1,6 @@
 import connectSpreadSheet from "@lib/models/connectSpreadSheet"
 import { createPost, getAllPosts,getPostBySlug, getPostsByCategory, getSlugs, publishPost } from "@lib/models/posts.js";
-import { prisma } from "@lib/service/database/prisma";
-import { PrismaClient } from "@prisma/client";
+
 
 export default {
     async getAllPosts(){
