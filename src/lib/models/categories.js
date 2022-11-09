@@ -20,3 +20,5 @@ export async function getAllCategories(){
   const rows = await  allCategories();
   return rows
 }
+
+///coment
