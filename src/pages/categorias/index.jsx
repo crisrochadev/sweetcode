@@ -1,4 +1,5 @@
 import PostSkeleton from "@components/basic/PostSkeleton";
+import Categories from "@lib/controllers/Categories";
 import Link from "next/link";
 
 export default function AllCategories({ categories }) {
@@ -49,8 +50,8 @@ export default function AllCategories({ categories }) {
 
 // }
 export async function getStaticProps(context) {
-    const res = await fetch('http://localhost:3000/api/categories').then(res => res.json())
-    const categories = res.categories ? res.categories : null;
+    const res = await Categories.getAllCategories()
+    const categories = res.result.categories ? res.result.categories : null;
   
     return {
       // Passed to the page component as props
