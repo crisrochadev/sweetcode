@@ -39,7 +39,7 @@ export async function getStaticPaths() {
 
   // Call an external API endpoint to get posts
   
-  const res = await fetch('http://localhost:3000/api/pages?arg=slug').then(res => res.json())
+  const res = await fetch('https://sweetcode.com.br/api/pages?arg=slug').then(res => res.json())
   // const slugs = await res.json()
   const slugs = res.slugs
 //   console.log(slugs)
