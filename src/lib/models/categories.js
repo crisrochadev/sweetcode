@@ -18,10 +18,5 @@ async function allCategories(){
 }
 export async function getAllCategories(){
   const rows = await  allCategories();
-  return{
-      status:200,
-      result:{
-          categories:rows
-      }
-  }
+  return rows
 }
