@@ -1,15 +1,9 @@
 import connectSpreadSheet from "@lib/models/connectSpreadSheet"
+import { getUserByToken, getUsersByLogin } from "@lib/models/users"
 import bcrypt from 'bcrypt'
 export default {
     async getUsersByLogin(data) {
-        const { rowsUsers } = await connectSpreadSheet('users')
-
-        // const hash = await bcrypt.hash('Vini2106#', 10).then(function(hash) {
-        //     return hash
-        // });
-        // console.log(hash)
-        // console.log(rowsUsers)
-        const user = rowsUsers.find(user => user.email === data.email);
+       const user = await getUsersByLogin(data)
         if (user) {
             const res = await bcrypt.compare(data.pass, user.password).then(result => {
                 if (result) {
@@ -47,8 +41,7 @@ export default {
         }
     },
     async getUserByToken(token) {
-        const { rowsUsers } = await connectSpreadSheet('users')
-        const user = rowsUsers.find(user => user.accessToken === token)
+        const user = await getUserByToken(token)
         if(user){
             return {
                 status:200,
