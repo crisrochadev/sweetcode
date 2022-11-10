@@ -1,12 +1,14 @@
+import { getAllCategories } from "@lib/models/categories";
 import connectSpreadSheet from "@lib/models/connectSpreadSheet"
 import { createPost, getAllPosts,getPostBySlug, getPostsByCategory, getSlugs, publishPost } from "@lib/models/posts.js";
+import { getAllTags } from "@lib/models/tags";
 
 //Add muita coisa Aqiui
 export default {
     async getAllPosts(){
         const rowsPosts = await getAllPosts();
-        const { rowsTags } = await connectSpreadSheet('tags')
-        const { rowsCategories } = await connectSpreadSheet('categories')
+        const rowsTags = await getAllTags();
+        const rowsCategories  = await getAllCategories();
         const posts = rowsPosts.map(row => {
             if(row.is_public === 'TRUE'){
                 return {

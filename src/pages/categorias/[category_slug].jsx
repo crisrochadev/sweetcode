@@ -80,10 +80,13 @@ export default function Home({ posts,category }) {
 export async function getServerSideProps(ctx) {
     const { category_slug } = ctx.params
     const data = await Posts.getPostsByCategory(category_slug)
+    const posts = data.result.posts
+    const category = data.result.category
+    console.log(posts)
     return {
         props: {
-            posts:data.result.posts,
-            category:data.result.category
+            posts:posts,
+            category:category
         }
     }
 }

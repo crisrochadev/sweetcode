@@ -1,3 +1,4 @@
+import { getAllCategories } from './categories';
 import getSheet from './connectSpreadSheet';
 import connectSpreadSheet from './connectSpreadSheet';
 
@@ -32,7 +33,7 @@ export async function getPostBySlug(slug){
 }
 export async function getPostsByCategory(category){
     const rows = await allPosts();
-    const { rowsCategories } = await connectSpreadSheet('categories')
+    const rowsCategories  = await getAllCategories();
     const categories = rowsCategories.find(ct => ct.slug === category)
     const posts = rows.filter(post => post.category === categories.id)
     const currentCategory = categories

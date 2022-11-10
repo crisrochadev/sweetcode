@@ -1,6 +1,6 @@
 
 import getSheet from "./connectSpreadSheet";
-async function allPages() {
+async function allTags() {
     const sheet = await getSheet('tags')
     const rows = await sheet.getRows();
     const posts = rows.map(tag => ({
@@ -13,4 +13,7 @@ async function allPages() {
 
 
     return posts;
+}
+export async function getAllTags(){
+    return await allTags()
 }
