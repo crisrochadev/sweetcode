@@ -96,7 +96,8 @@ export default function Home({ posts }) {
 // }
 
 // `getStaticPaths` requires using `getStaticProps`
-export async function getStaticProps(context) {
+export async function getStaticProps(ctx) {
+  const data = ctx
   const res = await Posts.getAllPosts();
   // console.log(res)
   const posts = res.result.posts ? res.result.posts.reverse()  : null;
