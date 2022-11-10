@@ -105,5 +105,7 @@ export async function getStaticProps(ctx) {
   return {
     // Passed to the page component as props
     props: { posts: posts},
+    
+            revalidate: 10,
   }
 }
