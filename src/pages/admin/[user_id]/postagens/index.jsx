@@ -171,7 +171,8 @@ export async function getStaticProps() {
     const posts = data.result.posts ? data.result.posts.reverse() : null
     return {
         props: {
-            posts: posts
+            posts: posts,
+            revalidate: 10,
         }
     }
 }
