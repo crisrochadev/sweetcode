@@ -1,27 +1,35 @@
 import { getAllCategories } from './categories';
 import getSheet from './connectSpreadSheet';
-import connectSpreadSheet from './connectSpreadSheet';
+import { getAllTags } from './tags';
 
 
 async function allPosts(){
     const sheet = await getSheet('posts')
     const rows = await sheet.getRows(); 
-    const posts = rows.map((post) => (({
-        id:post.id,
-        content:post.content ? post.content : '<p>Ooops, algo deu errado, volte a página inicial</p>',
-        title:post.title ? post.title : '',
-        date:post.date ? post.date : '',
-        author:post.author ? post.author : '',
-        excerpt:post.excerpt ? post.excerpt : '',
-        thumbnail:post.thumbnail ? post.thumbnail : '',
-        tags:post.tags ? JSON.parse(post.tags) : [] ,
-        category:post.category ? post.category : '',
-        slug:post.slug ? post.slug : '',
-        is_public:post.is_public
-    })))
+    const rowsTags = await getAllTags();
+    const rowsCategories = await getAllCategories();
+    const posts = rows.map((post) => {
+        const getTags = post.tags ? JSON.parse(post.tags) : []
 
+        return {
+            id:post.id,
+            content:post.content ? post.content : '<p>Ooops, algo deu errado, volte a página inicial</p>',
+            title:post.title ? post.title : '',
+            date:post.date ? post.date : '',
+            author:post.author ? post.author : '',
+            excerpt:post.excerpt ? post.excerpt : '',
+            slug:post.slug ? post.slug : 'error',
+            thumbnail:post.thumbnail ? post.thumbnail : '',
+            // tags:post.tags ? JSON.parse(post.tags) : [] ,
+            tags:getTags.map(tagId =>  rowsTags.find(tg => tg.id === tagId)).filter(t => t !== undefined),
+            category:post.category !== undefined ? rowsCategories.find(category => category.id === post.category) : {},
+            is_public:post.is_public === 'TRUE' ? true : false
+        }
+    })
+    //  console.log(posts)
     return posts;
 }
+
 export async function getAllPosts(){
     return await allPosts();
 }
@@ -48,7 +56,21 @@ export async function getSlugs(){
     return slugs
 }
 export async function createPost(post) {
+    if(post.id) {
+        // console.log(post)
+        let newData = {}
+        for(let [key,value] of Object.entries(post)){
+            
+            if(key !== 'id') newData[key] = value;
+            if(key === 'category') newData[key] = value.id
+            if(key === 'tags') newData[key] = JSON.stringify(value)
+        }
+
+        updatePost(newData,post.id)
+        return;
+    }
     const sheet = await getSheet('posts')
+    const rows = await sheet.getRows();
     const nextRowId = rows.length + 1
 
     const newPost = {
@@ -67,9 +89,9 @@ export async function createPost(post) {
     const res = await sheet.addRow(newPost)
     return res.id
 }
-export async function publishPost(data,id){
+export async function updatePost(data,id){
     const sheet = await getSheet('posts');
-    const rows = sheet.getRows();
+    const rows = await sheet.getRows();
     const row = rows.find(row => row.id === id)
     const index = rows.indexOf(row)
     let newRow = rows[index]
@@ -82,8 +104,23 @@ export async function publishPost(data,id){
         }
 
     }
+    
 
     rows[index] = newRow;
     const result = await rows[index].save();
+    return  rows[index].id
+}
+export async function deletePost(id){
+    const sheet = await getSheet('posts');
+    const rows = await sheet.getRows();
+    const row = rows.find(row => row.id === id)
+    const index = rows.indexOf(row)
+    const result = await rows[index].delete();
     return  result
+}
+export async function getPostById(id){
+    const rows = await allPosts();
+    const post = rows.find(post => post.id ==id)
+    // console.log(post)
+    return post;
 }

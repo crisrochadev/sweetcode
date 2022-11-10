@@ -1,6 +1,6 @@
 import { getAllCategories } from "@lib/models/categories";
 import connectSpreadSheet from "@lib/models/connectSpreadSheet"
-import { createPost, getAllPosts,getPostBySlug, getPostsByCategory, getSlugs, publishPost } from "@lib/models/posts.js";
+import { createPost, deletePost, getAllPosts,getPostById,getPostBySlug, getPostsByCategory, getSlugs, updatePost } from "@lib/models/posts.js";
 import { getAllTags } from "@lib/models/tags";
 
 //Add muita coisa Aqiui
@@ -10,7 +10,7 @@ export default {
         const rowsTags = await getAllTags();
         const rowsCategories  = await getAllCategories();
         const posts = rowsPosts.map(row => {
-            if(row.is_public === 'TRUE'){
+            if(row.is_public){
                 return {
                     id:row.id,
                     title:row.title,
@@ -20,8 +20,8 @@ export default {
                     author:row.author,
                     excerpt:row.excerpt,
                     thumbnail:row.thumbnail,
-                    tags:row.tags.map(tagId =>  rowsTags.find(tg => tg.id === tagId)).filter(t => t !== undefined),
-                    category:row.category !== '' ? rowsCategories.find(category => category.id === row.category) : {},
+                    tags:row.tags,
+                    category:row.category,
                 }
             }
         }).filter(p => p !== undefined)
@@ -34,7 +34,16 @@ export default {
         }
     },
 
-
+    async getPostsAdmin(){
+        const posts = await getAllPosts()
+        // console.log(posts)
+        return {
+            status:200,
+            result:{
+                posts:posts
+            }
+        }
+    },
     async getPostBySlug(slug){
         const post = await getPostBySlug(slug);
         return{
@@ -74,10 +83,28 @@ export default {
         }
     },
     async publishPost(data,id){
-            const result = await publishPost(data,id)
+            const result = await updatePost(data,id)
             return  {
                 status: 200,
                 result: result
             }
+    },
+    async deletePost(id){
+        const res = await deletePost(id)
+        return {
+            status:200,
+            result:{
+                res:res
+            }
+        }
+    },
+    async getPostById(id){
+        const post = await getPostById(id);
+        return{
+            status:200,
+            result:{
+                post:post
+            }
+        }
     }
 }

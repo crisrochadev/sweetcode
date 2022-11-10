@@ -11,6 +11,8 @@ export default async function handlePosts(req, res) {
     switch (method) {
         case 'GET':
             const arg = req.query.arg
+            const id = req.query.id;
+
             if (arg !== undefined) {
                 if (arg === 'slug') {
                     try {
@@ -21,6 +23,18 @@ export default async function handlePosts(req, res) {
                             result: {
                                 message: err
                             }
+                        }
+                    }
+                }
+            }
+            else if(id !== undefined){
+                try {
+                    response = await Posts.getPostById(id);
+                } catch (err) {
+                    response = {
+                        status: 500,
+                        result: {
+                            message: err
                         }
                     }
                 }
@@ -44,6 +58,10 @@ export default async function handlePosts(req, res) {
         case 'PUT':
             console.log(req.query)
             response = await Posts.publishPost(req.body, req.query.post_id)
+
+            break;
+            case 'DELETE':
+            response = await Posts.deletePost(req.query.post_id)
 
             break;
         default:

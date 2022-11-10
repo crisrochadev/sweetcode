@@ -2,8 +2,8 @@ import Image from "next/image"
 import { useState } from "react"
 
 export default function InputFile({ file, setFile }) {
-    const [displayFile, setDisplayFile] = useState(false)
-    const [element, setElement] = useState(null)
+    const [displayFile, setDisplayFile] = useState(file !== '')
+    const [element, setElement] = useState(<Image src={file} fill={true} style={{objectFit:'cover'}}alt="image-default"/>)
     function changeImage(e) {
         const file = e.target.files[0]
         if(file){
@@ -15,9 +15,8 @@ export default function InputFile({ file, setFile }) {
                 setFile(event.currentTarget.result)
                 setElement(<Image
                     src={event.currentTarget.result}
-                    width="90"
-                    height="90"
-                    style={{ objectFit: 'cover',width: '100%', height: 'auto'  }}
+                    fill={true}
+                    style={{ objectFit: 'cover'  }}
                     alt={file.name}
                     sizes="100vw"
                 />)

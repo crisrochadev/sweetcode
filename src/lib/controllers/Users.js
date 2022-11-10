@@ -1,5 +1,5 @@
 import connectSpreadSheet from "@lib/models/connectSpreadSheet"
-import { getUserByToken, getUsersByLogin } from "@lib/models/users"
+import { getIdUseers, getUserByToken, getUsersByLogin,users } from "@lib/models/users"
 import bcrypt from 'bcrypt'
 export default {
     async getUsersByLogin(data) {
@@ -56,6 +56,24 @@ export default {
                 result:{
                     user:null
                 }
+            }
+        }
+    },
+    async getAllUsers(){
+        const users = await getAllUsers();
+        return {
+            status:200,
+            result:{
+                users:users
+            }
+        }
+    },
+    async getIdUseers(){
+        const ids = await getIdUseers();
+        return{
+            status:200,
+            result:{
+                ids:ids
             }
         }
     }

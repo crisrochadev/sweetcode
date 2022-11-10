@@ -28,3 +28,11 @@ export async function getUserByToken(token) {
     const user = rowsUsers.find(user => user.accessToken === token)
     return user;
 }
+export async function getAllUsers(){
+    return await allUsers();
+}
+export async function getIdUseers(){
+   const users = await allUsers()
+   const ids = users.map(user => user.id)
+   return ids;
+}

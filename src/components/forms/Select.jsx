@@ -3,7 +3,8 @@ import { useState } from "react"
 export default function Select({ options,placeholder,icon ,selected,setSelected,defaultOption}) {
     const [isSelected,setIsSelected ] = useState(null)
     const [ openList, setOpenList ] = useState(false)
-    const [displayOption,setDisplayOption] = useState([])
+    const [displayOption,setDisplayOption] = useState(selected)
+    console.log(selected)
     return (
         <div className="md:w-64 w-full">
             <div className="mt-1 relative">

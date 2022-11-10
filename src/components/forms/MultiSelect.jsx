@@ -9,12 +9,12 @@ const Multiselect = ({ options, placeholder, icon, selectedItems, setSelectedIte
     const [iconView, setIconView] = useState(icon)
     const [items, setItems] = useState(options)
 
-    const [showItems, setShowItems] = useState([])
+    const [showItems, setShowItems] = useState(selectedItems)
     const [showCount, setShowCount] = useState(false)
     const [count, setCount] = useState(0)
     const itemsRef = useRef(null)
     const inputRef = useRef(null)
-
+    console.log(selectedItems)
     const restoreList = () => {
         setItems(options)
     }
@@ -69,6 +69,7 @@ const Multiselect = ({ options, placeholder, icon, selectedItems, setSelectedIte
                     <li key={item.id} className="px-2 list-none w-11/12 my-2 rounded-full h-8 flex justify-between items-center mx-auto" style={{ background: item.color }}>
                         <div>
                             <i className={`far fa-${item.icon} mr-2`}></i>
+
                             <span className='text-xs uppercase'>{item.label}</span>
                         </div>
                         <div onClick={() => removeTag(item)}>

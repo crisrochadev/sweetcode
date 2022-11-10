@@ -5,19 +5,35 @@ import ModalAddElements from './editor/ModalAddElements'
 import ModalSave from './editor/ModalSave'
 
 const EditorComponent = dynamic(() => import('@components/admin/posts/editor/EditorComponent'), { ssr: false })
-export default function NewPostComponent() {
-    const [editorContent, setEditorContent] = useState('')
-    const [title, setTitle] = useState('')
-    const [data, setData] = useState({})
+export default function NewPostComponent({post,changePost}) {
+    const getPost = {
+        title: post && post.title ? post.title : '',
+        content: post && post.content ? post.content : '',
+        thumbnail: post && post.thumbnail ? post.thumbnail : '',
+        category:post && post.category ? {
+            ...post.category,
+            label:post.category.name
+        }: {},
+        tags: post && post.tags ? post.tags.map(tag => ({
+            ...tag,
+            label:tag.name
+        })) : [],
+        date:post && post.date ? post.date : '',
+        excerpt:post && post.excerpt ? post.excerpt : '',
+
+    }
+    const [editorContent, setEditorContent] = useState(getPost.content)
+    const [title, setTitle] = useState(getPost.title)
+    const [data, setData] = useState(getPost.date)
     const [outline, setOutline] = useState(null)
     const [openModalSave, setOpenModalSave] = useState(false)
     const [openModalMoreElements, setOpenModalMoreElements] = useState(false)
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(getPost.thumbnail);
     const { user } = useContext(AuthContext)
 
-    const [selected, setSelected] = useState({})
-    const [selectedItems, setSelectedItems] = useState([]);
-    const [excerpt, setExcerpt] = useState('')
+    const [selected, setSelected] = useState(getPost.category)
+    const [selectedItems, setSelectedItems] = useState(getPost.tags);
+    const [excerpt, setExcerpt] = useState(getPost.excerpt)
     const tags = [
         { icon: 'code', label: 'Códigos', slug: 'codigos', id: '1', color: "#424242" },
         { icon: 'user', label: 'Pessoal', slug: 'pessoal', id: '2', color: "#0c50af" },
@@ -47,9 +63,10 @@ export default function NewPostComponent() {
             thumbnail: image,
             tags: selectedItems.map(select => select.id),
             category: selected.id ? selected.id : '',
-            author: user.fullName !== undefined ?  user.fullName  : ''
+            author: user.fullName !== undefined ? user.fullName : ''
         }
-        
+        if(post) newData['id'] = post.id
+
         setData(newData)
         setOpenModalSave(true)
     }
@@ -84,6 +101,7 @@ export default function NewPostComponent() {
                     </button>
                     {openModalSave && <div className='w-full h-full fixed z-50  top-0 left-0 flex justify-center items-center' style={{ background: 'rgba(0,0,0,.25)' }}>
                         <ModalSave data={data}
+                        changePost={(arg) => changePost(arg)}
                             setHide={() => setOpenModalSave(false)}
                             title="Salvar a Postagem"
                             text="Você deseja publicar essa postagem agora? Se preferir pode publicar depois no menu, todas as postagens."
@@ -102,7 +120,7 @@ export default function NewPostComponent() {
                 />
             </div>
             <div className='pb-24'>
-                <EditorComponent changeContent={changeContent} />
+                <EditorComponent changeContent={changeContent} content={editorContent} />
             </div>
         </div>
     )
