@@ -68,11 +68,11 @@ export default function TableComponent({
                 </div>
                 <div className="bg-gray-100 dark:bg-gray-600 py-4 md:py-7 px-4 md:px-8 xl:px-10">
                     <div className="sm:flex items-center justify-between">
-                        <div className="flex items-center">
+                        <div className="flex md:items-center md:flex-row flex-col">
                             {menu.map((item, index) => (
                                 <button
                                     key={index}
-                                    className="rounded-full focus:outline-none focus:ring-2 mx-1 focus:bg-indigo-50 focus:ring-pink-800"
+                                    className="md:my-0 my-2  focus:outline-none focus:ring-2 mx-1 focus:bg-indigo-50 focus:ring-pink-800"
                                 >
                                     <div className="py-2 px-8 bg-pink-100 dark:bg-pink-600 text-pink-700 dark:text-pink-100 ">
                                         <p>{item.label}</p>
@@ -83,7 +83,7 @@ export default function TableComponent({
                         <Link
                             href={`/admin/${id}/postagens/nova`}
                             // onclick="popuphandler(true)"
-                            className="focus:ring-2 focus:ring-offset-2 focus:ring-pink-600 mt-4 sm:mt-0 inline-flex items-start justify-start px-6 py-3 bg-pink-700 hover:bg-pink-600 focus:outline-none"
+                            className="focus:ring-2 focus:ring-offset-2 focus:ring-pink-600 mt-4 sm:mt-0 flex md:inline-flex items-start md:justify-start justify-center px-6 py-3 bg-pink-700 hover:bg-pink-600 focus:outline-none"
                         >
                             <p className="text-sm font-medium leading-none text-white">
                                 <i className={`far fa-${buttonAction.icon} mr-2`}></i>
