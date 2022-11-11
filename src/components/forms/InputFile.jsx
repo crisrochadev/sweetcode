@@ -1,26 +1,33 @@
+import axios from "axios"
 import Image from "next/image"
 import { useState } from "react"
 
-export default function InputFile({ file, setFile }) {
+export default function InputFile({ file, setFile,type }) {
     const [displayFile, setDisplayFile] = useState(file !== '')
-    const [element, setElement] = useState(<Image src={file} fill={true} style={{objectFit:'cover'}}alt="image-default"/>)
+    const [element, setElement] = useState(<Image src={file} fill={true} style={{ objectFit: 'cover' }} alt="image-default" />)
     function changeImage(e) {
         const file = e.target.files[0]
-        if(file){
+        if (file) {
             setDisplayFile(true)
             const reader = new FileReader()
             reader.readAsDataURL(file)
-    
+
             reader.onload = function (event) {
                 setFile(event.currentTarget.result)
-                setElement(<Image
-                    src={event.currentTarget.result}
-                    fill={true}
-                    style={{ objectFit: 'cover'  }}
-                    alt={file.name}
-                    sizes="100vw"
-                />)
+                axios.post('/api/files/'+type, { image: event.currentTarget.result })
+                    .then(res => {
+                        setFile(res.data.baseurl)
+                        setElement(<Image
+                            src={res.data.baseurl}
+                            fill={true}
+                            style={{ objectFit: 'cover' }}
+                            alt={file.name}
+                            sizes="100vw"
+                        />)
+                    })
+                    .catch(err => console.log(err))
             }
+
         }
     }
     return (

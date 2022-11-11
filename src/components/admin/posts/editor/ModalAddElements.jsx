@@ -28,6 +28,7 @@ export default function ModalAddElements({
             </div>
             <div className='flex w-full flex-wrap md:flex-nowrap justify-between items-center md:h-[130px] h-[330px] mb-2 gap-2 '>
                 <InputFile
+                    type='image'
                     file={image}
                     setFile={setImage}
                 />

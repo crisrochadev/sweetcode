@@ -59,10 +59,10 @@ export default function ModalSave({ data, title, text, setHide,changePost }) {
             <div className="flex justify-end items-center py-2 mt-2">
                 <button
                     onClick={savePost}
-                    className="bg-fuchsia-500 hover:bg-fuchsia-700 text-gray-800 uppercase text-xs py-2 px-4 mx-2"><i className="far fa-save"></i> Apenas Salvar</button>
+                    className="bg-fuchsia-500 hover:bg-fuchsia-700 text-gray-100 uppercase text-xs py-2 px-4 mx-2"><i className="far fa-save"></i> Apenas Salvar</button>
                 <button
                     onClick={publishPost}
-                    className="bg-pink-500 hover:bg-pink-700 text-gray-800 uppercase text-xs py-2 px-4 mx-2"><i className="far fa-upload"></i> Publicar</button>
+                    className="bg-pink-500 hover:bg-pink-700 text-gray-100 uppercase text-xs py-2 px-4 mx-2"><i className="far fa-upload"></i> Publicar</button>
             </div>
             {loading && <div className="fixed w-full h-full top-0 left-0 flex justify-center items-center" style={{ background: 'rgba(0,0,0,.35)' }}>
                 {isLoading

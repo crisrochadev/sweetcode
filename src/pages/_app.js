@@ -18,6 +18,7 @@ Router.onRouteChangeError = () => NProgress.done()
 
 import * as gtag from 'src/lib/gtag'
 import Analytics from 'src/components/geral/Analytics'
+import LayoutAdmin from 'src/layouts/admin'
 
 function App({ Component, pageProps }) {
   const router = useRouter()

@@ -104,3 +104,9 @@
     }
   }
   
+  /* Tailwind */
+  
+[data-col]{
+  padding: 4px;
+  height:100%;
+}
